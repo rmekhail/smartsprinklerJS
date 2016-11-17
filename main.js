@@ -34,7 +34,7 @@ app.get('/sprinklers/off', (req,res) => {
     gpio.close();    
 });
 
-app.post(/sprinklers/addrule, (req, res) => {
+app.post('/sprinklers/addrule', (req, res) => {
     console.log("Adding a rule");
     
 })
