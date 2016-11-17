@@ -45,7 +45,7 @@ var file = '/tmp/data.json'
 
 //==================TIMER======================
 
-function timerThread() {
+function sprinklerTimer() {
     console.log ("Timer Triggered")
 
     jsonfile.readFile(file, (err, obj) => {
@@ -54,4 +54,4 @@ function timerThread() {
 }
 
 jsonfile.writeFileSync(file, data)
-setInterval(timerThread, 5000);
+setInterval(sprinklerTimer, 5000);
