@@ -23,11 +23,15 @@ app.post('/rules/delete', (req,res) => {
 });
 
 app.get('/sprinklers/on', (req,res) => {
-    console.log ("Sprinklers On");
+    console.log ("Sprinklers ON");
+    gpio.open();
+    gpio.on();
 });
 
 app.get('/sprinklers/off', (req,res) => {
-    console.log ("Sprinklers Off");
+    console.log ("Sprinklers OFF");
+    gpio.off();
+    gpio.close();    
 });
 
 app.post(/sprinklers/addrule, (req, res) => {
