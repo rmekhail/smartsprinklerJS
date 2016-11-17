@@ -35,9 +35,23 @@ app.listen(port, function(){
 	console.log("Server running on port " + port);
 });
 
+//==================SAVE=======================
+var jsonfile = require('jsonfile')
+var file = '/tmp/data.json'
+
+
+ 
+//jsonfile.writeFileSync(file, obj)
+
 //==================TIMER======================
+
 function timerThread() {
     console.log ("Timer Triggered")
+
+    jsonfile.readFile(file, (err, obj) => {
+        console.dir(obj)
+    })
 }
 
-setInterval(timerThread, 5000/*300000*/);
+jsonfile.writeFileSync(file, data)
+setInterval(timerThread, 5000);
