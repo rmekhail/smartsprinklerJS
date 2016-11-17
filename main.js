@@ -34,3 +34,10 @@ var port = 8080
 app.listen(port, function(){
 	console.log("Server running on port " + port);
 });
+
+//==================TIMER======================
+function timerThread() {
+    console.log ("Timer Triggered")
+}
+
+setInterval(timerThread, 5000/*300000*/);
