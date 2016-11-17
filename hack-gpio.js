@@ -1,5 +1,4 @@
 var exec = require("child_process").exec;
-var sleep = require("sleep");
 
 var openCmd = "echo 17 > /sys/class/gpio/export";
 var setupCmd = "echo out > /sys/class/gpio/gpio17/direction";

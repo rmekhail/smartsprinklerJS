@@ -15,44 +15,51 @@ app.get('/rules', function(req, res){
 });
 
 app.post('/rules/add', (req,res) => {
-    console.log ("Add Rule")
+    console.log ("Add Rule");
 });
 
 app.post('/rules/delete', (req,res) => {
-    console.log ("Delete Rule")
+    console.log ("Delete Rule");
 });
 
 app.get('/sprinklers/on', (req,res) => {
-    console.log ("Sprinklers On")
+    console.log ("Sprinklers On");
 });
 
 app.get('/sprinklers/off', (req,res) => {
-    console.log ("Sprinklers Off")
+    console.log ("Sprinklers Off");
 });
 
-var port = 8080
+var port = 8080;
 
 app.listen(port, function(){
 	console.log("Server running on port " + port);
 });
 
 //==================SAVE=======================
-var jsonfile = require('jsonfile')
-var file = '/tmp/data.json'
+var jsonfile = require('jsonfile');
+var file = '/tmp/data.json';
 
 
  
 //jsonfile.writeFileSync(file, obj)
 
-//==================TIMER======================
+//==================TIMERS======================
 
 function sprinklerTimer() {
-    console.log ("Timer Triggered")
+    console.log ("Sprinkler Timer Triggered");
 
     jsonfile.readFile(file, (err, obj) => {
-        console.dir(obj)
+        console.dir(obj);
     })
 }
 
-jsonfile.writeFileSync(file, data)
+jsonfile.writeFileSync(file, data);
+
 setInterval(sprinklerTimer, 5000);
+
+function updateWeather () {
+    console.log ("Weather Timer Triggered");
+}
+
+setInterval(updateWeather, 3600000);
