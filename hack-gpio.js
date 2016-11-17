@@ -44,7 +44,7 @@ var gpio = {
 	},
 	
 	off : function() {
-		if(this.opened) {
+		 {
 			exec(offCmd, (err, stdout, stderr) => {
 				if(err) {
 					console.log("Error turning off LED: " + stderr);
