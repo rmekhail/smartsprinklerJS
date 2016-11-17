@@ -30,7 +30,7 @@ var gpio = {
 	},
 	
 	on : function() {
-		if(!opened)
+		if(!this.opened)
 			open();
 		exec(onCmd, (err, stdout, stderr) => {
 			if(err) {
@@ -44,7 +44,7 @@ var gpio = {
 	},
 	
 	off : function() {
-		if(opened) {
+		if(this.opened) {
 			exec(offCmd, (err, stdout, stderr) => {
 				if(err) {
 					console.log("Error turning off LED: " + stderr);
