@@ -9,7 +9,7 @@ module.exports = function(city) {
             if(error) {
                 reject('unable to retrieve the temperature');
             } else {
-                resolve(body.main['temp']);
+                resolve(body);
             }  
         });        
     });
