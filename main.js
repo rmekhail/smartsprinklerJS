@@ -16,6 +16,7 @@ forecast.startUpdates();
 function sprinklerTimer() {
     console.log ("Sprinkler Timer Triggered");
     console.log ("%j",forecast.localWeather)
+    console.log ("Forecast last updated: " + forecast.lastUpdated)
     //jsonfile.readFile(file, (err, obj) => {
     //    console.dir(obj);
     //})

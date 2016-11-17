@@ -1,7 +1,9 @@
 //================WEATHER======================END
 var location = require('./location.js');
 var weather = require('./weather.js');
+
 module.exports.localWeather = null;
+module.exports.lastUpdated = null;
 
 function getLocalWeather()
 {
@@ -19,6 +21,7 @@ function getLocalWeather()
             weather(city).then(function(forecast) {
                 console.log ("It's " + forecast.main['temp'] + "F in " + city);
                 module.exports.localWeather = forecast;
+                module.exports.lastUpdated = new Date(); 
             }, function(){
                 console.log('Unable to retrieve the weather data.');
                 return;
@@ -29,6 +32,7 @@ function getLocalWeather()
         weather(city).then(function(forecast) {
         console.log ("It's " + forecast.main['temp'] + "F in " + city);
         module.exports.localWeather = forecast;
+        module.exports.lastUpdated = new Date();
         }, 
         function() {    
             console.log('Unable to retrieve the weather data.');
