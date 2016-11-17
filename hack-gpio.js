@@ -31,7 +31,7 @@ var gpio = {
 	
 	on : function() {
 		if(!this.opened)
-			open();
+			this.open();
 		exec(onCmd, (err, stdout, stderr) => {
 			if(err) {
 				console.log("Error turning on LED: " + stderr);
@@ -39,7 +39,7 @@ var gpio = {
 		});
 	},
 	onwithduration : function(duration, off) {
-		on();
+		this.on();
 		setInterval(duration, off());
 	},
 	
@@ -50,7 +50,7 @@ var gpio = {
 					console.log("Error turning off LED: " + stderr);
 				}
 			});
-			close();
+			this.close();
 		}
 	}
 }
