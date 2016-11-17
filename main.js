@@ -24,12 +24,14 @@ app.post('/rules/delete', (req,res) => {
 
 app.get('/sprinklers/on', (req,res) => {
     console.log ("Sprinklers ON");
+    gpio.open();
     gpio.on();
 });
 
 app.get('/sprinklers/off', (req,res) => {
     console.log ("Sprinklers OFF");
-    gpio.off();    
+    gpio.off();
+    gpio.close();    
 });
 
 var port = 8080;
