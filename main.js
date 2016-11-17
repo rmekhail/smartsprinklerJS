@@ -1,4 +1,3 @@
-var gpio = require('./hack-gpio');
 var forecast = require('./localweather');
 var api = require('./api');
 var ruleProvider = require('./ruleprovider');
@@ -11,7 +10,7 @@ forecast.startUpdates();
 
 function sprinklerTimer() {
     console.log ("Sprinkler Timer Triggered");
-
+    console.log ("Forecast last updated: " + forecast.lastUpdated)
     provider.apply();
 }
 

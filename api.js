@@ -1,3 +1,5 @@
+var gpio = require('./hack-gpio');
+var forecast = require('./localweather');
 var express = require('express');
 var bp = require('body-parser');
 
@@ -22,6 +24,11 @@ module.exports.startServer = function (ruleProvider) {
     app.put('/sprinklers/on', (req,res) => {
         console.log ("Sprinklers: ON");
         gpio.on();
+        res.json({});
+    });
+
+    app.put('/debug/rain', (req, res) => {
+        forecast.debugRain ();
         res.json({});
     });
 

@@ -1,13 +1,26 @@
-//================WEATHER======================END
 var location = require('./location.js');
 var weather = require('./weather.js');
+
 module.exports.localWeather = null;
+module.exports.lastUpdated = null;
+
+module.exports.debugRain = function ()
+{
+    
+}
+
+function processForecast (forecast)
+{
+    module.exports.localWeather = forecast;
+    module.exports.lastUpdated = new Date();
+    console.log ("Forecast updated on " + module.exports.lastUpdated);
+    console.log ("It's " + forecast.main['temp'] + "F in " + forecast.name); 
+}
 
 function getLocalWeather()
 {
     var city = '';
 
-    // parse command line for location here
     if (city === '') {
         location(function (location) {
             if (!location) {
@@ -17,8 +30,7 @@ function getLocalWeather()
             
             city = location.city;
             weather(city).then(function(forecast) {
-                console.log ("It's " + forecast.main['temp'] + "F in " + city);
-                module.exports.localWeather = forecast;
+                processForecast(forecast);
             }, function(){
                 console.log('Unable to retrieve the weather data.');
                 return;
@@ -27,8 +39,7 @@ function getLocalWeather()
     } 
     else {
         weather(city).then(function(forecast) {
-        console.log ("It's " + forecast.main['temp'] + "F in " + city);
-        module.exports.localWeather = forecast;
+            processForecast (forecast);
         }, 
         function() {    
             console.log('Unable to retrieve the weather data.');
@@ -55,5 +66,3 @@ function updateWeather () {
     console.log ("Weather Timer Triggered");
     getLocalWeather();
 }
-
-//================WEATHER======================END
