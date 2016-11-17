@@ -1,4 +1,3 @@
-var gpio = require('./hack-gpio');
 var forecast = require('./localweather');
 var api = require('./api')
 
