@@ -15,8 +15,9 @@ function ruleProvider() {
             this.rules.push(rule);
             console.log("adding rules:\n" + JSON.stringify(this.rules));
             fs.truncate(file, 0, () => 
-                jsonfile.writeFile(file, rule, (err) =>
-                                    console.log("Error storing the rule: " + err)));
+                jsonfile.writeFile(file, rule, (err) => {
+                                        if(err) console.log("Error storing the rule: " + err)
+                                    }));
             
     };
 
