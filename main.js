@@ -23,11 +23,13 @@ app.post('/rules/delete', (req,res) => {
 });
 
 app.get('/sprinklers/on', (req,res) => {
-    console.log ("Sprinklers On");
+    console.log ("Sprinklers ON");
+    gpio.on();
 });
 
 app.get('/sprinklers/off', (req,res) => {
-    console.log ("Sprinklers Off");
+    console.log ("Sprinklers OFF");
+    gpio.off();    
 });
 
 var port = 8080;
