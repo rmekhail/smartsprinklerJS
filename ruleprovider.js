@@ -21,8 +21,11 @@ function ruleProvider() {
 
     ruleProvider.prototype.getrules = function() {
             // rules = json list
-            if(this.rules.length == 0) {         
-                this.rules = jsonfile.readFileSync(file);
+            if(this.rules.length == 0) {       
+                fs.exists(file, (exists) => {
+                    if(exists) { this.rules = jsonfile.readFileSync(file); }
+                });  
+                
             }
             return this.rules;
     };
