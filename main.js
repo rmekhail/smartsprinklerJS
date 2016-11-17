@@ -5,7 +5,6 @@ var api = require('./api')
 api.startServer();
 forecast.startUpdates();
 
-
 //==================SAVE=======================
 //var jsonfile = require('jsonfile');
 //var file = '/tmp/data.json';
