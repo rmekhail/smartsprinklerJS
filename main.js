@@ -42,7 +42,7 @@ app.listen(port, function(){
 	console.log("Server running on port " + port);
 });
 
-//================WEATHER======================
+//================WEATHER======================END
 var location = require('./location.js');
 var weather = require('./weather.js');
 var localWeather;
@@ -60,9 +60,9 @@ function getLocalWeather ()
             }
             
             city = location.city;
-            weather(city).then(function(temp) {
-                console.log ("It's " + temp + "F in " + city);
-                localWeather = temp
+            weather(city).then(function(forecast) {
+                console.log ("It's " + forecast.main['temp'] + "F in " + city);
+                localWeather = forecast
             }, function(){
                 console.log('Unable to retrieve the weather data.');
                 return;
@@ -70,8 +70,8 @@ function getLocalWeather ()
         });
     } 
     else {
-        weather(city).then(function(temp) {
-        console.log ("It's " + "%j" + "F in " + city, temp);
+        weather(city).then(function(forecast) {
+        console.log ("It's " + forecast.main['temp'] + "F in " + city);
         }, 
         function() {    
             console.log('Unable to retrieve the weather data.');
@@ -79,9 +79,10 @@ function getLocalWeather ()
         });
     }
 }
+
 getLocalWeather();
 
-//================WEATHER======================
+//================WEATHER======================END
 
 //==================SAVE=======================
 var jsonfile = require('jsonfile');
@@ -89,7 +90,7 @@ var file = '/tmp/data.json';
  
 //jsonfile.writeFileSync(file, obj)
 
-//==================TIMERS======================
+//==================TIMERS======================END
 
 function sprinklerTimer() {
     console.log ("Sprinkler Timer Triggered");
@@ -105,6 +106,7 @@ setInterval(sprinklerTimer, 5000);
 
 function updateWeather () {
     console.log ("Weather Timer Triggered");
+    getLocalWeather();
 }
 
 setInterval(updateWeather, 3600000);
