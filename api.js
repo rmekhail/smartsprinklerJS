@@ -14,7 +14,7 @@ module.exports.startServer = function (ruleProvider) {
 
     app.post('/rules/add', (req,res) => {
         console.log ("Add Rule");
-        ruleProvider.addrule(req);
+        ruleProvider.addrule(req.body);
     });
 
     app.post('/rules/delete', (req,res) => {
