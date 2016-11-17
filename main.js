@@ -30,6 +30,11 @@ app.get('/sprinklers/off', (req,res) => {
     console.log ("Sprinklers Off");
 });
 
+app.post(/sprinklers/addrule, (req, res) => {
+    console.log("Adding a rule");
+    
+})
+
 var port = 8080;
 
 app.listen(port, function(){
