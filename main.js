@@ -1,5 +1,6 @@
 var express = require('express');
-var bp = require('body-parser')
+var bp = require('body-parser');
+var gpio = require('./hack-gpio');
 
 var app = express();
 app.use(bp.json());
