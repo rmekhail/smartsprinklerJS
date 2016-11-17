@@ -7,6 +7,7 @@ var offCmd = "echo 0 > /sys/class/gpio/gpio17/value";
 var closeCmd = "echo 17 > /sys/class/gpio/unexport"
 
 var gpio = {
+	opened : false,
 	open : function() {
 		exec(openCmd, (err, stdout, stderr) => {
 			if (err) {
@@ -28,20 +29,26 @@ var gpio = {
 		});
 	},
 	
-	on : function() {
+	on : function(duration, off) {
+		if(!opened)
+			open();
 		exec(onCmd, (err, stdout, stderr) => {
 			if(err) {
 				console.log("Error turning on LED: " + stderr);
 			}
 		});
+		setInterval(duration, off());
 	},
 	
 	off : function() {
-		exec(offCmd, (err, stdout, stderr) => {
-			if(err) {
-				console.log("Error turning off LED: " + stderr);
-			}
-		});
+		if(opened) {
+			exec(offCmd, (err, stdout, stderr) => {
+				if(err) {
+					console.log("Error turning off LED: " + stderr);
+				}
+			});
+			close();
+		}
 	}
 }
 
