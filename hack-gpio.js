@@ -29,7 +29,7 @@ var gpio = {
 		});
 	},
 	
-	on : function(duration, off) {
+	on : function() {
 		if(!opened)
 			open();
 		exec(onCmd, (err, stdout, stderr) => {
@@ -37,6 +37,9 @@ var gpio = {
 				console.log("Error turning on LED: " + stderr);
 			}
 		});
+	},
+	onwithduration : function(duration, off) {
+		on();
 		setInterval(duration, off());
 	},
 	

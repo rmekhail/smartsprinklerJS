@@ -1,7 +1,9 @@
-var rule = 
+module.export.rule = function(time, duration, rainlevel, repeat) {}
 {
-    time : new Date(),
-    duration: 0,
-    rainlevel : 0,
-    repeat: false
+    if(time == null)
+        time = new Date();
+    this.time = time;
+    this.duration = duration;
+    this.rainlevel = rainlevel;
+    this.repeat = repeat;
 }

@@ -1,17 +1,18 @@
 var express = require('express');
 var bp = require('body-parser');
 
-module.exports.startServer = function () {
+module.exports.startServer = function (ruleProvider) {
     
     var app = express();    
     app.use(bp.json());
 
     app.get('/rules', function(req, res){
-	    res.json(data);
+	    res.json(ruleProvider.getrules());
     });
 
     app.post('/rules/add', (req,res) => {
         console.log ("Add Rule");
+        ruleProvider.addrule(req);
     });
 
     app.post('/rules/delete', (req,res) => {
@@ -20,7 +21,6 @@ module.exports.startServer = function () {
 
     app.put('/sprinklers/on', (req,res) => {
         console.log ("Sprinklers: ON");
-        gpio.open();
         gpio.on();
         res.json({});
     });
@@ -28,7 +28,6 @@ module.exports.startServer = function () {
     app.put('/sprinklers/off', (req,res) => {
         console.log ("Sprinklers: OFF");
         gpio.off();
-        gpio.close();
         res.json({});    
     });
     

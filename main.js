@@ -1,27 +1,20 @@
 var gpio = require('./hack-gpio');
 var forecast = require('./localweather');
-var api = require('./api')
+var api = require('./api');
+var ruleProvider = require('./ruleprovider');
 
-api.startServer();
+var provider = new ruleProvider();
+api.startServer(provider);
 forecast.startUpdates();
-
-//==================SAVE=======================
-//var jsonfile = require('jsonfile');
-//var file = '/tmp/data.json';
- 
-//jsonfile.writeFileSync(file, obj)
 
 //==================TIMERS======================END
 
 function sprinklerTimer() {
     console.log ("Sprinkler Timer Triggered");
-    console.log ("%j",forecast.localWeather)
-    //jsonfile.readFile(file, (err, obj) => {
-    //    console.dir(obj);
-    //})
+
+    provider.apply();
 }
 
-//jsonfile.writeFileSync(file, data);
 
 setInterval(sprinklerTimer, 5000);
 
