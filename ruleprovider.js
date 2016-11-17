@@ -13,6 +13,7 @@ function ruleProvider() {
     ruleProvider.prototype.addrule = function(rule) {
             console.log("Adding new rule, for sprinklers to turn on at " + rule.time + " for " + rule.duration + " minutes.");
             this.rules.push(rule);
+            console.log("adding rules:\n" + JSON.stringify(rules));
             fs.truncate(file, 0, () => 
                 jsonfile.writeFile(file, rule, (err) =>
                                     console.log("Error storing the rule: " + err)));
