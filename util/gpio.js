@@ -11,7 +11,7 @@ var closeCmd = "echo 17 > /sys/class/gpio/unexport"
 var gpio = {
 	opened : false,
 	open : function() {
-		exec("echo " + config.pin " > " + config.gpiopath + exporturi, (err, stdout, stderr) => {
+		exec("echo " + config.pin + " > " + config.gpiopath + exporturi, (err, stdout, stderr) => {
 			if (err) {
 				console.log("Error opening gpio pin: " + stderr);
 			} else {
