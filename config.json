@@ -1,0 +1,4 @@
+{
+    "pin" : 17,
+    "gpiopath" : "/sys/class/gpio"
+}
