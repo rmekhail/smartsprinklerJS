@@ -19,6 +19,8 @@ function processForecast (forecast)
 
 function getLocalWeather()
 {
+    // TODO: city should be moved out of the funtion
+    // TODO: setting the location should only be done once
     var city = '';
 
     if (city === '') {
@@ -37,7 +39,7 @@ function getLocalWeather()
             });
         });
     } 
-    else {
+    else { // TODO: can be refactored to remove the else
         weather(city).then(function(forecast) {
             processForecast (forecast);
         }, 
