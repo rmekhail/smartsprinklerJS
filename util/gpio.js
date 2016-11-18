@@ -1,6 +1,8 @@
 var exec = require("child_process").exec;
+var config = require("../config");
 
 var openCmd = "echo 17 > /sys/class/gpio/export";
+var exporturi = "/export";
 var setupCmd = "echo out > /sys/class/gpio/gpio17/direction";
 var onCmd = "echo 1 > /sys/class/gpio/gpio17/value";
 var offCmd = "echo 0 > /sys/class/gpio/gpio17/value";
@@ -9,9 +11,11 @@ var closeCmd = "echo 17 > /sys/class/gpio/unexport"
 var gpio = {
 	opened : false,
 	open : function() {
-		exec(openCmd, (err, stdout, stderr) => {
+		exec("echo " + config.pin " > " + config.gpiopath + exporturi, (err, stdout, stderr) => {
 			if (err) {
 				console.log("Error opening gpio pin: " + stderr);
+			} else {
+				this.opened = true;
 			}
 		});
 		exec(setupCmd, (err, stdout, stderr) => {

@@ -1,5 +1,5 @@
-var location = require('./location.js');
-var weather = require('./weather.js');
+var location = require('../util/location.js');
+var weather = require('../util/weather.js');
 
 module.exports.localWeather = null;
 module.exports.lastUpdated = null;

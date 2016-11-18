@@ -1,4 +1,4 @@
-var gpio = require('./hack-gpio.js');
+var gpio = require('./util/hack-gpio.js');
 var jsonfile = require('jsonfile');
 var file = '/tmp/data.json';
 var fs = require('fs');
