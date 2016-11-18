@@ -1,4 +1,4 @@
-var gpio = require('../util/hack-gpio');
+var gpio = require('../util/gpio');
 var express = require('express');
 var bp = require('body-parser');
 
