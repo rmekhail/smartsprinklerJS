@@ -38,7 +38,7 @@ function ruleProvider() {
                     if(!this.delayed) {
                         if(new Date() == rule.time){
                             if(localweather.forecast.rain['3h'] < rule.rainlevel) {
-                                gpio.on(rule.duration*60000, gpio.off);
+                                gpio.onwithduration(rule.duration*60000, gpio.off);
                             } else {
                                 gpio.off();
                                 delayed = true;
