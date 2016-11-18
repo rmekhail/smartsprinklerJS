@@ -1,6 +1,6 @@
-var forecast = require('./localweather');
-var api = require('./api');
-var ruleProvider = require('./ruleprovider');
+var forecast = require('./product/localweather');
+var api = require('./product/api');
+var ruleProvider = require('./product/ruleprovider');
 
 var provider = new ruleProvider();
 api.startServer(provider);
