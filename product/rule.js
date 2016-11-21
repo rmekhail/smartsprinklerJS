@@ -1,5 +1,4 @@
-module.export.rule = function(time, duration, rainlevel, repeat) {}
-{
+module.exports = rule = function(time, duration, rainlevel, repeat) {
     if(time == null)
         time = new Date();
     this.time = time;
