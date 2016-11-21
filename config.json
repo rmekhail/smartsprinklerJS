@@ -1,4 +1,7 @@
 {
-    "pin" : 17,
-    "gpiopath" : "/sys/class/gpio"
+    "pin": 17,
+    "gpioexport": "/sys/class/gpio/export",
+    "gpiounexport": "/sys/class/gpio/unexport",
+    "gpiodirection": "/sys/class/gpio/gpio17/direction",
+    "gpioswitchvalue": "/sys/class/gpio/gpio17/value"
 }
