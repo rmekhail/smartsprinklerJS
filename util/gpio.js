@@ -1,13 +1,21 @@
 var exec = require("child-process-promise").exec;
 var config = require("../config");
 
-var gpio = {
-	ready: false,
-	isready : () => {
+var GPIO = function() {
+	this.ready = false;
+	this.on = false;
+}
+
+GPIO.prototype.isready = function() {
 		console.log(`returning ready: ${this.ready}`);
 		return this.ready
-	},
-	open : function() {
+};
+
+GPIO.prototype.ison = function() {
+		return this.on;
+};
+
+GPIO.prototype.open = function() {
 		console.log(`opening gpio port ${config.pin}`);
 		exec(`echo ${config.pin} > ${config.gpioexport}`)
 			.then((result) => {
@@ -24,34 +32,41 @@ var gpio = {
 			.catch((err) => {
 				console.log("Error initializing gpio pin: " + stderr);
 			});
-	},
-	close : function() {
+		return this.isready;
+};
+
+GPIO.prototype.close = function() {
 		exec(`echo ${config.pin} > ${confing.gpiounexport}`)
 			.catch((err) => {
 				console.log("Error closing gpio pin: " + stderr);
 			});
-	},
+};
 	
-	on : function() {
+GPIO.prototype.on = function() {
 		if(!this.ready)
 			this.open();
 		exec(`echo 1 > ${config.gpioswitchvalue}`)
+			.then((result) => {
+				this.on = true;
+			})
 			.catch((err) => {
 				console.log("Error turning on LED: " + stderr);
 			});
-	},
-	onwithduration : function(duration, off) {
+		return this.ison;
+};
+
+GPIO.prototype.onwithduration = function(duration, off) {
 		this.on();
 		setInterval(duration, off());
-	},
+};
 	
-	off : function() {
-		 {
-			exec(`echo 0 > ${config.gpioswitchvalue}`)
-			.then(this.close())
-			.catch((err) => {console.log("Error turning off LED: " + stderr);});
-		}
-	}
-}
+GPIO.prototype.off = function() {
+	exec(`echo 0 > ${config.gpioswitchvalue}`)
+		.then((result) => {
+			this.on = false;
+		})
+		.then(this.close())
+		.catch((err) => { console.log("Error turning off LED: " + stderr); });
+};
 
-module.exports = gpio;
+module.exports = GPIO;
