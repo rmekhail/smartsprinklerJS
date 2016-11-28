@@ -24,9 +24,13 @@ describe("test_ruleprovider_addrule", () => {
 describe("test_ruleprovider_applyrule", () => {
     it("Tests applying a rule", () => {
         var provider = new ruleprovider();
-        provider.rules.push(getrule());
+        var rule = getrule();
+        rule.time = new Date();
+        provider.rules.push(rule);
+        provider.apply();
+
         // TODO: write test
-        expect(false).to.equal(true);
+        expect(provider.getgpio().ison()).to.equal(true);
 
     })
 });

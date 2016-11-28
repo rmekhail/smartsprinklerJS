@@ -3,5 +3,6 @@
     "gpioexport": "/sys/class/gpio/export",
     "gpiounexport": "/sys/class/gpio/unexport",
     "gpiodirection": "/sys/class/gpio/gpio17/direction",
-    "gpioswitchvalue": "/sys/class/gpio/gpio17/value"
+    "gpioswitchvalue": "/sys/class/gpio/gpio17/value",
+    "rulefile": "/tmp/data.json"
 }

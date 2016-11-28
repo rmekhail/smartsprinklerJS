@@ -1,6 +1,7 @@
 var gpio = require('../util/gpio');
 var jsonfile = require('jsonfile');
-var file = '/tmp/data.json';
+var config = require('../config');
+var file = config.rulefile;//'/tmp/data.json';
 var fs = require('fs');
 var localweather = require('./localweather.js');
 
@@ -21,6 +22,10 @@ ruleProvider.prototype.addrule = function(rule) {
                                     }));
             
 };
+
+ruleProvider.prototype.getgpio = function() {
+    return this.gpio;
+}
 
 ruleProvider.prototype.getrules = function() {
     // rules = json list
