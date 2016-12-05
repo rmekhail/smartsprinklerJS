@@ -1,13 +1,17 @@
 {
-  "name": "hackathon",
+  "name": "smartsprinklerjs",
   "version": "1.0.0",
-  "description": "Smart Sprinkler",
+  "description": "A NodeJS smart sprinkler controller for IoT devices.",
   "main": "main.js",
   "scripts": {
     "test": "mocha test --recursive",
     "start": "node main.js"
   },
-  "author": "",
+  "author": "Ramzi Mekhail",
+  "repository" :{
+    "type" : "git",
+    "url" : "https://github.com/rmekhail/smartsprinklerJS.git"
+  },
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",
