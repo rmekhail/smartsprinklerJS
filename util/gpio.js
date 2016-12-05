@@ -1,15 +1,21 @@
 var exec = require("child-process-promise").exec;
+var Enum = require("enum");
 var config = require("../config");
 "use strict"
+
+
 var GPIO = function(){
-	this.ready = false;
-	
+	this.gpiostate = GPIO.prototype.pinstate.closed;	
 }
 
-GPIO.prototype.isready = (() => {
-		console.log(`returning ready: ${this.ready} from this ${this}`);
-		return this.ready;
+GPIO.prototype.pinstate = new Enum(['closed', 'open', 'on', 'onwithduration']);
+
+GPIO.prototype.getstate = (() => {
+		console.log(`returning state: ${this.gpiostate}`);
+		return this.gpiostate;
 	});
+
+
 GPIO.prototype.open = (() => {
 		console.log(`opening gpio port ${config.pin}`);
 		exec(`echo ${config.pin} > ${config.gpioexport}`)
@@ -23,14 +29,14 @@ GPIO.prototype.open = (() => {
 			.catch((err) => {
 				console.log(`Error opening gpio pin ${config.pin}: ${err}`);
 			});
-			this.ready = true;
-			console.log(`gpio pin ${config.pin} set up and ready = ${this.ready}`);
+			this.gpiostate = GPIO.prototype.pinstate.open;
+			console.log(`gpio pin ${config.pin} set up and ready = ${this.gpiostate}`);
 			
 		});
 GPIO.prototype.close = (() => {
 		exec(`echo ${config.pin} > ${confing.gpiounexport}`)
 			.then(((result) => {
-				this.ready = false;
+				this.gpiostate = GPIO.prototype.pinstate.closed;
 				console.log(`closing ${config.pin} in ${this}`);
 			}))
 			.catch((err) => {
@@ -39,12 +45,13 @@ GPIO.prototype.close = (() => {
 	});
 GPIO.prototype.on = (() => {
 		console.log(`called on in object ${this}`);
-		if(!this.ready)
+		if(!(this.gpiostate === GPIO.prototype.pinstate.open))
 			this.open();
 		exec(`echo 1 > ${config.gpioswitchvalue}`)
 			.catch((err) => {
 				console.log("Error turning on LED: " + err);
 			});
+		this.gpiostate = GPIO.prototype.pinstate.on;
 	});
 GPIO.prototype.onwithduration = ((duration, off) => {
 		console.log(`called onwithduration in object ${this}`);
