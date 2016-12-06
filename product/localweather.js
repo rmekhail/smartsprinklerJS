@@ -50,8 +50,6 @@ function getLocalWeather()
     }
 }
 
-module.exports.getLocalWeather = getLocalWeather;
-
 function startUpdates ()
 {
     if (module.exports.localWeather == null)
@@ -62,9 +60,10 @@ function startUpdates ()
     setInterval(updateWeather, 3600000);
 }
 
-module.exports.startUpdates = startUpdates;
-
 function updateWeather () {
     console.log ("Weather Timer Triggered");
     getLocalWeather();
 }
+
+module.exports.getLocalWeather = getLocalWeather;
+module.exports.startUpdates = startUpdates;

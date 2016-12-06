@@ -1,14 +1,30 @@
 var chai = require('chai');
 var expect = chai.expect;
-var ruleprovider = require('../product/ruleprovider');
+var RuleProvider = require('../product/ruleprovider');
 var Rule = require('../product/rule');
 var config = require('../config.json');
 var Random = require('./random');
+var GPIO = require('../util/gpio');
+var pinstate = require('../util/gpio').pinstate;
 
-describe("ruleprovider", function() {
+describe("ruleprovider", () => {
+    beforeEach("set test defaults", () =>{        
+        var platform = process.platform;
+        var defaultconfig = '/dev/null';
+        if(platform === 'win32'){
+            defaultconfig = 'NUL';
+        }
+        config.pin = 0;
+        config.gpiopath = defaultconfig;
+        config.gpioexport = defaultconfig;
+        config.gpiounexport = defaultconfig;
+        config.gpiodirection = defaultconfig;
+        config.gpioswitchvalue = defaultconfig;
+    });
+    
     describe('.addrule(item)', function() {
         it("should add a rule", () => {
-            var provider = new ruleprovider();
+            var provider = new RuleProvider(new GPIO());
             //time, duration, rainlevel, repeat
 
             var item = new getrule();
@@ -23,15 +39,31 @@ describe("ruleprovider", function() {
     });
 
     describe(".applyrule()", () => {
-        it("should apply a rule", () => {
-            var provider = new ruleprovider();
-            var rule = getrule();
-            rule.time = new Date();
-            provider.rules.push(rule);
+        it("Tests applying a rule", () => {
+            var gpio = new GPIO();
+            var provider = new RuleProvider(gpio);
+            var item = getrule();
+            item.time = new Date();
+            provider.addrule(item);
+            
             provider.apply();
+            expect(provider.getgpio().getstate()).to.equal(gpio.pinstate.on);
+        })
+    });
 
-            // TODO: write test
-            expect(provider.getgpio().ison()).to.equal(true);
+    describe(".applyrule()", () => {
+        it.only("Tests setting a delay", () => {
+            var gpio = new GPIO();
+            var provider = new RuleProvider(gpio);
+            var item = getrule();
+            item.time = new Date();
+            provider.addrule(item);
+            provider.setforecast({"rainlevel": item.rainlevel});
+            provider.apply();
+            expect(gpio.getstate()).to.equal(gpio.pinstate.closed);
+            expect(provider.isdelayed()).to.equal(true);
+            expect(provider.getdelayduration()).to.equal(item.duration);
+
         })
     });
 });
