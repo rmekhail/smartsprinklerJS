@@ -8,6 +8,20 @@ var GPIO = require('../util/gpio');
 var pinstate = require('../util/gpio').pinstate;
 
 describe("ruleprovider", () => {
+    beforeEach("set test defaults", () =>{        
+        var platform = process.platform;
+        var defaultconfig = '/dev/null';
+        if(platform === 'win32'){
+            defaultconfig = 'NUL';
+        }
+        config.pin = 0;
+        config.gpiopath = defaultconfig;
+        config.gpioexport = defaultconfig;
+        config.gpiounexport = defaultconfig;
+        config.gpiodirection = defaultconfig;
+        config.gpioswitchvalue = defaultconfig;
+    });
+
     describe("addrule", () => {
         it("Tests adding a rule", () => {
             var provider = new RuleProvider(new GPIO());
@@ -30,13 +44,31 @@ describe("ruleprovider", () => {
             var provider = new RuleProvider(gpio);
             var item = getrule();
             item.time = new Date();
-            provider.rules.push(getrule());
-            // TODO: write test
+            provider.addrule(item);
+            
             provider.apply();
             expect(provider.getgpio().getstate()).to.equal(gpio.pinstate.on);
 
         })
     });
+
+    describe("applyrule", () => {
+        it.only("Tests setting a delay", () => {
+            var gpio = new GPIO();
+            var provider = new RuleProvider(gpio);
+            var item = getrule();
+            item.time = new Date();
+            provider.addrule(item);
+            provider.setforecast({"rainlevel": item.rainlevel});
+            provider.apply();
+            expect(gpio.getstate()).to.equal(gpio.pinstate.closed);
+            expect(provider.isdelayed()).to.equal(true);
+            expect(provider.getdelayduration()).to.equal(item.duration);
+
+        })
+    });
+
+    
 });
 
 

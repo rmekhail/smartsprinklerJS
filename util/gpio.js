@@ -34,7 +34,7 @@ GPIO.prototype.open = (() => {
 			
 		});
 GPIO.prototype.close = (() => {
-		exec(`echo ${config.pin} > ${confing.gpiounexport}`)
+		exec(`echo ${config.pin} > ${config.gpiounexport}`)
 			.then(((result) => {
 				this.gpiostate = GPIO.prototype.pinstate.closed;
 				console.log(`closing ${config.pin} in ${this}`);
@@ -60,9 +60,9 @@ GPIO.prototype.onwithduration = ((duration, off) => {
 	});
 GPIO.prototype.off = (() => {
 		console.log(`called off in object ${this}`);
-			exec(`echo 0 > ${config.gpioswitchvalue}`)
-			.then(this.close())
+		exec(`echo 0 > ${config.gpioswitchvalue}`)
 			.catch((err) => {console.log("Error turning off LED: " + err);});
+		GPIO.prototype.close();
 	});
 
 module.exports = GPIO;
