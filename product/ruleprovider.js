@@ -5,35 +5,38 @@ var fs = require('fs');
 var localweather = require('./localweather.js');
 
 
-function ruleProvider(pins) {
+function RuleProvider(pins) {
     this.gpio = pins;
     this.delayed = false;
     this.delayDuration = 0;
-    this.rainlevel = 0;
+    this.rainLevel = 0;
     this.forecast = null;
     this.rules = [];
 }
 
-ruleProvider.prototype.getgpio = function(){
+RuleProvider.prototype.getGpio = function(){
     return this.gpio;
 }
 
-ruleProvider.prototype.addrule = function(rule) {
-    console.log("Adding new rule, for sprinklers to turn on at " + rule.time + " for " + rule.duration + " minutes.");
+RuleProvider.prototype.addRule = function(rule) {
+    console.log(`Adding new rule, for sprinklers to turn on at ${rule.time} for`
+                +` ${rule.duration} minutes.`);
     this.rules.push(rule);
-    console.log("adding rules:\n" + JSON.stringify(this.rules));
+    console.log('adding rules:\n' + JSON.stringify(this.rules));
     fs.truncate(file, 0, () => 
         jsonfile.writeFile(file, rule, (err) => {
-                                        if(err) console.log("Error storing the rule: " + err)
+                                        if(err) {
+                                            console.log(`Error storing the rule: ${err}`);
+                                        }
                                     }));
             
 };
 
-ruleProvider.prototype.getgpio = function() {
+RuleProvider.prototype.getGpio = function() {
     return this.gpio;
 }
 
-ruleProvider.prototype.getrules = function() {
+RuleProvider.prototype.getRules = function() {
     // rules = json list
     if(this.rules.length == 0) {       
         fs.exists(file, (exists) => {
@@ -45,25 +48,25 @@ ruleProvider.prototype.getrules = function() {
     return this.rules;
 };
 
-ruleProvider.prototype.apply = function() {
+RuleProvider.prototype.apply = function() {
     this.rules.forEach((rule) => {
-        if (this.getforecast() != null){
+        if (this.getForecast() != null){
             if(!this.delayed) {
                 var currentTime = new Date();
                 console.log(`Value for rule.time is ${rule.time}`);
                 if((currentTime.getHours() == rule.time.getHours()) && 
                         (currentTime.getMinutes() == rule.time.getMinutes())){
-                    if(this.getforecast().rainlevel < rule.rainlevel) {
-                        console.log(`Detecting rain ${this.getforecast().rainlevel} is below threshold of ${rule.rainlevel}`);
+                    if(this.getForecast().rainLevel < rule.rainLevel) {
+                        console.log(`Detecting rain ${this.getForecast().rainLevel} is below threshold of ${rule.rainLevel}`);
                         this.gpio.onwithduration(rule.duration*60000, this.gpio.off);
                     } else {
-                        console.log(`Detecting rain ${this.getforecast().rainlevel} >= threshold of ${rule.rainlevel}`);
+                        console.log(`Detecting rain ${this.getForecast().rainLevel} >= threshold of ${rule.rainLevel}`);
                         this.gpio.off();
                         delayed = true;
                         delayDuration = rule.duration;
                     }
-                } else if(this.getforecast().rainlevel >= rule.rainlevel){
-                    console.log(`Detecting rain ${this.getforecast().rainlevel} >= threshold of ${rule.rainlevel}`);
+                } else if(this.getForecast().rainLevel >= rule.rainLevel){
+                    console.log(`Detecting rain ${this.getForecast().rainLevel} >= threshold of ${rule.rainLevel}`);
                     this.gpio.off();
                     delayed = true;
                     delayDuration = rule.duration;
@@ -73,22 +76,22 @@ ruleProvider.prototype.apply = function() {
     });
 };
 
-ruleProvider.prototype.getforecast = function(){
+RuleProvider.prototype.getForecast = function(){
     return this.forecast;
 }
 
-ruleProvider.prototype.setforecast = function(fc){
+RuleProvider.prototype.setForecast = function(fc){
     this.forecast = fc;
 }
 
-ruleProvider.prototype.isdelayed = function() {
+RuleProvider.prototype.isDelayed = function() {
     return this.delayed;
 };
 
-ruleProvider.prototype.getdelayduration = function(){
+RuleProvider.prototype.getDelayDuration = function(){
     return this.delayDuration;
 }
 
 
 
-module.exports = ruleProvider;
+module.exports = RuleProvider;

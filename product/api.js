@@ -39,6 +39,6 @@ module.exports.startServer = function (ruleProvider) {
     var port = 8080;
 
     app.listen(port, function(){
-	    console.log("Server running on port " + port);
+	    console.log(`Server running on port ${port}`);
     });
 }

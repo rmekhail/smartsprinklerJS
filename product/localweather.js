@@ -13,8 +13,8 @@ function processForecast (forecast)
 {
     module.exports.localWeather = forecast;
     module.exports.lastUpdated = new Date();
-    console.log ("Forecast updated on " + module.exports.lastUpdated);
-    console.log ("It's " + forecast.main['temp'] + "F in " + forecast.name); 
+    console.log (`Forecast updated on ${module.exports.lastUpdated}`);
+    console.log (`It's ${forecast.main['temp']} F in ${forecast.name}`); 
 }
 
 function getLocalWeather()
@@ -61,7 +61,7 @@ function startUpdates ()
 }
 
 function updateWeather () {
-    console.log ("Weather Timer Triggered");
+    console.log ('Weather Timer Triggered');
     getLocalWeather();
 }
 
