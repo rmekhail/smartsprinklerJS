@@ -8,7 +8,7 @@ var GPIO = require('../util/gpio');
 var pinstate = require('../util/gpio').pinstate;
 
 describe("ruleprovider", () => {
-    beforeEach("set test defaults", () =>{        
+    before("set test defaults", () =>{        
         var platform = process.platform;
         var defaultconfig = '/dev/null';
         if(platform === 'win32'){
@@ -39,7 +39,7 @@ describe("ruleprovider", () => {
     });
 
     describe(".applyrule()", () => {
-        it("Tests applying a rule", () => {
+        it("should apply a rule and turn on", () => {
             var gpio = new GPIO();
             var provider = new RuleProvider(gpio);
             var item = getrule();
@@ -52,7 +52,7 @@ describe("ruleprovider", () => {
     });
 
     describe(".applyrule()", () => {
-        it.only("Tests setting a delay", () => {
+        it("should apply a rule and set a delay", () => {
             var gpio = new GPIO();
             var provider = new RuleProvider(gpio);
             var item = getrule();
